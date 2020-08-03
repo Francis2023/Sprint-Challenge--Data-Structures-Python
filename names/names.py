@@ -13,14 +13,49 @@ f.close()
 duplicates = []  # Return the list of duplicates in this data structure
 
 # Replace the nested for loops below with your improvements
-for name_1 in names_1:
-    for name_2 in names_2:
-        if name_1 == name_2:
-            duplicates.append(name_1)
+class BST:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+    
+    def insert(self,value):
+        if value < self.value:
+            if not self.left:
+                self.left = BST(value)
+            else:
+                self.left.insert(value)
+        elif value >= self.value:
+            if not self.right:
+                self.right = BST(value)
+            else: 
+                self.right.insert(value)
+    
+    def dup(self, target):
+        if self.value == target:
+            return True
+        if target < self.value:
+            if not self.left:
+                return False
+            else: 
+                return self.left.dup(target)
+        else: 
+            if not self.right:
+                return False
+            else:
+                return self.right.dup(target)
+
 
 end_time = time.time()
 print (f"{len(duplicates)} duplicates:\n\n{', '.join(duplicates)}\n\n")
 print (f"runtime: {end_time - start_time} seconds")
+
+BST = BinarySearchTree("")
+for name_2 in names_2:
+    BST.insert(names_2)
+for name_1 in names_1:
+    if BST.dup(name_1):
+        duplicates.append(name_1)
 
 # ---------- Stretch Goal -----------
 # Python has built-in tools that allow for a very efficient approach to this problem
